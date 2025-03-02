@@ -450,7 +450,7 @@ plt.figure(figsize=(8,6))
 plt.scatter(metrics_df['avg_return'], metrics_df['avg_volatility'], color='darkgreen', alpha=0.7)
 plt.xlabel("Average Return")
 plt.ylabel("Average Volatility")
-plt.title("Average Return vs. Volatility across Outer Iterations")
+plt.title("Average Return vs. Volatility across Total Iterations")
 plt.grid(True)
 
 # Note the selected combinations in the scatter plot
