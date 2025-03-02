@@ -112,17 +112,19 @@ last_price = closing_prices.loc[last_date, selected_stocks].dot(weights)  # Get 
 
 for i in range(num_simulations):
     # Generate returns for the next 365 days (normal distribution)
-    random_returns = np.random.normal(portfolio_mu, portfolio_sigma, forecast_days)
+    random_returns = np.random.normal(portfolio_mu, portfolio_sigma, forecast_days - 1)
 
     # Calculate the portfolio price for the next 365 days
-    cumulative_returns = np.cumsum(random_returns)  # Calculate the cumulative rate of return
+    daily_returns_sim = np.concatenate(([0], random_returns))
+    cumulative_returns = np.cumsum(daily_returns_sim)  # Calculate the cumulative rate of return
+    
     future_prices = last_price * np.exp(cumulative_returns)  # Calculate the future price
 
     # Save simulation results
     simulations[i] = future_prices
 
     # Save returns
-    returns[i] = random_returns
+    returns[i] = daily_returns_sim
 
     # Save drawdowns
     peak = np.maximum.accumulate(future_prices)
@@ -234,17 +236,18 @@ for outer in range(num_outer_iterations):
 
     for i in range(num_simulations):
         # Generate returns for the next 365 days (normal distribution)
-        random_returns = np.random.normal(portfolio_mu, portfolio_sigma, forecast_days)
+        random_returns = np.random.normal(portfolio_mu, portfolio_sigma, forecast_days - 1)
 
         # Calculate the portfolio price for the next 365 days
-        cumulative_returns = np.cumsum(random_returns)  # Calculate the cumulative rate of return
+        daily_returns_sim = np.concatenate(([0], random_returns))
+        cumulative_returns = np.cumsum(daily_returns_sim)  # Calculate the cumulative rate of return
         future_prices = last_price * np.exp(cumulative_returns)  # Calculate the future price
 
         # Save simulation results
         simulations[i] = future_prices
 
         # Save returns
-        returns[i] = random_returns
+        returns[i] = daily_returns_sim
 
         # Save drawdowns
         peak = np.maximum.accumulate(future_prices)
@@ -380,17 +383,18 @@ for selected_stocks in combination_generator:
 
     for i in range(num_simulations):
         # Generate returns for the next 365 days (normal distribution)
-        random_returns = np.random.normal(portfolio_mu, portfolio_sigma, forecast_days)
+        random_returns = np.random.normal(portfolio_mu, portfolio_sigma, forecast_days - 1)
 
         # Calculate the portfolio price for the next 365 days
-        cumulative_returns = np.cumsum(random_returns)  # Calculate the cumulative rate of return
+        daily_returns_sim = np.concatenate(([0], random_returns))
+        cumulative_returns = np.cumsum(daily_returns_sim)  # Calculate the cumulative rate of return
         future_prices = last_price * np.exp(cumulative_returns)  # Calculate the future price
 
         # Save simulation results
         simulations[i] = future_prices
 
         # Save returns
-        returns[i] = random_returns
+        returns[i] = daily_returns_sim
 
         # Save drawdowns
         peak = np.maximum.accumulate(future_prices)
