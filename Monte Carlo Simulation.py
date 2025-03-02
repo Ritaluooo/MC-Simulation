@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import os
 import yfinance as yf
 import statsmodels.api as sm
+import itertools
 
 # COMMAND ----------
 
@@ -328,8 +329,7 @@ print("Metrics for the best portfolio:\n", best_metrics)
 
 # COMMAND ----------
 
-import itertools
-
+# Define a generator function to generate all combinations of k items from the given list
 def generate_all_combinations_as_arrays(items, k):
     """
     Generator that yields all combinations of k items from the given list as NumPy arrays.
